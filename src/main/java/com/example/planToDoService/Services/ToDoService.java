@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ToDoService {
     @Autowired
@@ -60,5 +63,18 @@ public class ToDoService {
             message="Plan saved successfully";
         }
         return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    public ResponseEntity<?> fetchTask(String email)
+    {
+        String message;
+        Query query=new Query(Criteria.where("addedBy").is(email));
+        List<NewPlan> plans = mongoTemplate.find(query,NewPlan.class);
+        if(plans.size()==0)
+        {
+            message="No Task";
+            return ResponseEntity.status(HttpStatus.OK).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(plans);
     }
 }
