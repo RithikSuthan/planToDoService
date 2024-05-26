@@ -21,4 +21,10 @@ public class ToDOControllers {
     {
         return service.register(user);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody(required = false) User user)
+    {
+        return service.login(user);
+    }
 }
