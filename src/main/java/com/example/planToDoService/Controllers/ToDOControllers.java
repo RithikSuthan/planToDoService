@@ -1,5 +1,6 @@
 package com.example.planToDoService.Controllers;
 
+import com.example.planToDoService.Models.NewPlan;
 import com.example.planToDoService.Models.User;
 import com.example.planToDoService.Services.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,11 @@ public class ToDOControllers {
     public ResponseEntity<?> login(@RequestBody(required = false) User user)
     {
         return service.login(user);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addTask(@RequestBody(required = false)NewPlan newPlan)
+    {
+        return service.addTask(newPlan);
     }
 }
