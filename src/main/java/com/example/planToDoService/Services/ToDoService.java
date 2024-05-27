@@ -77,4 +77,20 @@ public class ToDoService {
         }
         return ResponseEntity.status(HttpStatus.OK).body(plans);
     }
+    public ResponseEntity<?> deleteTask(String taskNo)
+    {
+        String message;
+        Query query=new Query(Criteria.where("taskNo").is(taskNo));
+        NewPlan exist=mongoTemplate.findOne(query,NewPlan.class);
+        if(exist!=null)
+        {
+            message="Plan deleted Successfully";
+            mongoTemplate.findAndRemove(query,NewPlan.class);
+        }
+        else
+        {
+            message="Plan doesn't exist";
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
 }

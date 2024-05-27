@@ -37,4 +37,10 @@ public class ToDOControllers {
     {
         return service.fetchTask(email);
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteTask(@RequestParam String taskNo)
+    {
+        return service.deleteTask(taskNo);
+    }
 }
