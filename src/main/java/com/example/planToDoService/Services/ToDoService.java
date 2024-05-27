@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -90,6 +91,22 @@ public class ToDoService {
         else
         {
             message="Plan doesn't exist";
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+    public ResponseEntity<?> editTask(String taskNo , String plan)
+    {
+        String message="";
+        Query query=new Query(Criteria.where("taskNo").is(taskNo));
+        NewPlan existPlan=mongoTemplate.findOne(query,NewPlan.class);
+        if(existPlan ==null)
+        {
+            message="Plan not Found";
+        }
+        else
+        {
+            mongoTemplate.findAndModify(query,new Update().set("plan",plan),NewPlan.class);
+            message="Plan modified successfully";
         }
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }

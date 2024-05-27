@@ -43,4 +43,10 @@ public class ToDOControllers {
     {
         return service.deleteTask(taskNo);
     }
+
+    @PatchMapping("/edit")
+    public ResponseEntity<?> editTask(@RequestParam String taskNo,@RequestParam String plan)
+    {
+         return service.editTask(taskNo,plan);
+    }
 }
