@@ -49,4 +49,10 @@ public class ToDOControllers {
     {
          return service.editTask(taskNo,plan);
     }
+
+    @PatchMapping("/status")
+    public ResponseEntity<?> editStatus(@RequestParam String taskNo)
+    {
+        return service.editStatus(taskNo);
+    }
 }

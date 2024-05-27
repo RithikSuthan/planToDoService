@@ -110,4 +110,20 @@ public class ToDoService {
         }
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+    public ResponseEntity<?> editStatus(String taskNo)
+    {
+        String message="";
+        Query query=new Query(Criteria.where("taskNo").is(taskNo));
+        NewPlan exist=mongoTemplate.findOne(query,NewPlan.class);
+        if(exist == null)
+        {
+            message="Plan status update failed";
+        }
+        else
+        {
+            mongoTemplate.findAndModify(query,new Update().set("status",!exist.status),NewPlan.class);
+            message="Plan update success";
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
 }
